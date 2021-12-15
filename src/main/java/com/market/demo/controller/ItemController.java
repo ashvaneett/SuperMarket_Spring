@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.market.demo.exception.ResourceNotFoundException;
 import com.market.demo.model.Item;
 import com.market.demo.repository.ItemRepository;
 
+@RestController
 public class ItemController {
 
 	@Autowired
