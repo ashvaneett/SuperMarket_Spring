@@ -78,7 +78,7 @@ public class ItemController {
 	}
 	// delete employee
 
-	@DeleteMapping("items/{id}")
+	@DeleteMapping("/items/{id}")
 	public Map<String, Boolean> deleteItem(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
 		Item book = itemRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Item not found for this id:: " + id));
@@ -89,14 +89,11 @@ public class ItemController {
 		response.put("deleted", Boolean.TRUE);
 		return response;
 	}
-//	@GetMapping("books/item/{name}")
-//	public List<Item> getBookByAuthorName(@PathVariable(value = "name") String name) {
-//		List<Item> book=(List<Item>) itemRepository.findBookByAuthor(author);
-//		for(Book book2:book) {
-//			System.out.println(book2);
-//		}
-//	
-//		return book;
-//	}
+	@GetMapping("/item/{name}")
+	public Item getBookByAuthorName(@PathVariable(value = "name") String name) {
+		Item book=itemRepository.findItemByName(name);
+	
+		return book;
+}
 
 }

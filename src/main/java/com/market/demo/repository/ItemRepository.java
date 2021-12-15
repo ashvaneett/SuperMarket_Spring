@@ -7,6 +7,7 @@ import com.market.demo.model.Item;
 public interface ItemRepository  extends JpaRepository<Item, Integer>{
 	
 	public Item findItemById(int id);
+	public Item findItemByName(String name);
 	
 
 }
