@@ -21,73 +21,69 @@ import com.market.demo.model.Item;
 import com.market.demo.repository.ItemRepository;
 
 public class ItemController {
-	
+
 	@Autowired
 	private ItemRepository itemRepository;
-	
-	
+
 	@GetMapping("/items")
-	public ResponseEntity<List<Item>> getAllBooks(){
-		List<Item> items=this.itemRepository.findAll();
-		if(items.size()<=0) {
+	public ResponseEntity<List<Item>> getAllItems() {
+		List<Item> items = this.itemRepository.findAll();
+		if (items.size() <= 0) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		return ResponseEntity.of(Optional.of(items));
 	}
-	
-	
-	//get employee by id
-	
+
+	// get employee by id
+
 	@GetMapping("/items/{id}")
-	public ResponseEntity<Item> getItemById(@PathVariable(value="id") Integer id) throws ResourceNotFoundException {
-		Item item=itemRepository.findById(id)
-				.orElseThrow(() ->new  ResourceNotFoundException("Item not found for this id:: "+ id));
-		
+	public ResponseEntity<Item> getItemById(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
+		Item item = itemRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Item not found for this id:: " + id));
+
 		return ResponseEntity.ok().body(item);
 	}
-	
-	
-	
-	//save employee by insert in table 
-	
+
+	// save employee by insert in table
+
 	@PostMapping("/items")
-	public Item createBook(@RequestBody Item item) {
+	public Item createItem(@RequestBody Item item) {
 		return this.itemRepository.save(item);
-		
+
 	}
+
 	@PostMapping("/items/")
-	public List<Item> createBooks(@RequestBody List<Item> list) {
+	public List<Item> createItems(@RequestBody List<Item> list) {
 		return this.itemRepository.saveAll(list);
 	}
-	
-	
-	//update employee
-	
+
+	// update employee
+
 	@PutMapping("/items/{id}")
-	public ResponseEntity<Item> updateEmployee(@PathVariable(value="id") Integer id,
-			@Validated @RequestBody Item item) throws ResourceNotFoundException{
-		
-		Item item2=itemRepository.findById(id)
-				.orElseThrow(() ->new  ResourceNotFoundException("Item not found for this id:: "+ id));
-	item2.setCatagory(item.getCatagory());
-	item2.setDate(item.getDate());
-	item2.setId(item.getId());
-	item2.setName(item.getName());
-	item2.setQuantity(item.getQuantity());
-	
-	return ResponseEntity.ok(this.itemRepository.save(item2));
-	
+	public ResponseEntity<Item> updateItem(@PathVariable(value = "id") Integer id, @Validated @RequestBody Item item)
+			throws ResourceNotFoundException {
+
+		Item item2 = itemRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Item not found for this id:: " + id));
+		item2.setCatagory(item.getCatagory());
+		item2.setDate(item.getDate());
+		item2.setId(item.getId());
+		item2.setName(item.getName());
+		item2.setQuantity(item.getQuantity());
+
+		return ResponseEntity.ok(this.itemRepository.save(item2));
+
 	}
-	//delete employee
-	
+	// delete employee
+
 	@DeleteMapping("items/{id}")
-	public Map<String,Boolean> deleteItem(@PathVariable(value="id") Integer id) throws ResourceNotFoundException{
-		Item book=itemRepository.findById(id)
-				.orElseThrow(() ->new  ResourceNotFoundException("Item not found for this id:: "+ id));
+	public Map<String, Boolean> deleteItem(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
+		Item book = itemRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Item not found for this id:: " + id));
 		this.itemRepository.delete(book);
-		
-		Map<String, Boolean> response=new HashMap<>();
-		
+
+		Map<String, Boolean> response = new HashMap<>();
+
 		response.put("deleted", Boolean.TRUE);
 		return response;
 	}
@@ -100,7 +96,5 @@ public class ItemController {
 //	
 //		return book;
 //	}
-		
-
 
 }
